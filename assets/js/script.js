@@ -1,27 +1,77 @@
-// TODO: Declare any global variables we need
+// Declare any global variables we need keep track
 
+let numberOfHeads = 0
+let numberOfTails = 0
+let total = 0
+let pctHeads = 0
+let pctTails = 0
+
+//DOM Elements (below ia a list of elements that change status)
+const flipButton = document.querySelector('#flip');
+const clearButton = document.querySelector('#clear');
+const statusHeader = document.querySelector('.message-container');
+const pennyImage = document.querySelector('img');
+const headsCell = document.querySelector('#heads');
+const tailsCell = document.querySelector('#tails');
+const headsPctCell = document.querySelector('#heads-percent');
+const tailsPctCell = document.querySelector('#tails-percent');
 
 document.addEventListener('DOMContentLoaded', function () {
-    // This is just a sanity check to make sure your JavaScript script is getting loaded
-    // You can remove it once you see it in your browser console in the developer tools
-    console.log('Hi')
-
-    // TODO: Add event listener and handler for flip and clear buttons
-
-    // Flip Button Click Handler
-        // TODO: Determine flip outcome
-        // TODO: Update image and status message in the DOM
-
-        // Update the scorboard
-        // TODO: Calculate the total number of rolls/flips
-        // Make variables to track the percentages of heads and tails
-        // TODO: Use the calculated total to calculate the percentages
-        // HINT: Make sure not to divide by 0! (if total is 0, percent will be 0 as well)
-        // TODO: Update the display of each table cell
 
 
-    // Clear Button Click Handler
-        // TODO: Reset global variables to 0
-        // TODO: Update the scoreboard (same logic as in flip button click handler)
+    //Flip Button Handler
+    flipButton.addEventListener('click', function(e) {
+        console.log('Coin Tossed')
+        total += 1;
+        const result = Math.round(Math.random() * 100);
+        console.log("RNG with result", result)
 
+
+        //heads = 50-100
+        if (result > 50) {
+            numberOfHeads += 1;
+            statusHeader.textContent = 'you flipped Heads';
+            pennyImage.src = "./assets/images/penny-heads.jpg";
+            pennyImage.alt = 'A penny is shown face up';
+        } 
+        // Tails = 0-50
+        else {
+            numberOfTails += 1;
+            statusHeader.textContent = 'you flipped tails';
+            pennyImage.src = './assets/images/penny-tails.jpg';
+            pennyImage.alt = 'A penny is shown face down';
+        }
+        console.log("Heads",numberOfHeads,"Tails", numberOfTails)
+
+        // Section Below will Calculate Percentages
+        pctHeads = Math.round ((numberOfHeads / total) * 100);
+        pctTails = Math.round ((numberOfTails / total) * 100);
+        console.log("% Heads", pctHeads,"% Tails", pctTails)
+        
+        //Results on Scoreboard
+        headsCell.textContent = `${numberOfHeads}`
+        headsPctCell.textContent = `${pctHeads}%`
+        tailsCell.textContent =`${numberOfTails}`
+        tailsPctCell.textContent = `${pctTails}%`
+            
+     })
+        //Section will Clear Page
+        clearButton.addEventListener('click', function(e) {
+            console.log('Statistics have been cleared');
+            numberOfHeads = 0;
+            numberOfTails = 0;
+            total = 0;
+            pctHeads = 0;
+            pctTails = 0;
+
+            headsCell.textContent = `${numberOfHeads}`
+            tailsCell.textContent = `${numberOfTails}`
+            headsPctCell.textContent = `${pctHeads}`
+            tailsPctCell.textContent = `${pctTails}`
+            statusHeader.textContext  = `${'Lets Roll'}`
+
+            pennyImage.src = "./assets/images/penny-tails.jpg";
+            pennyImage.alt = 'A penny is shown face up';
+
+         });
 })
